@@ -87,7 +87,6 @@ public class EarthMoonSystem extends Application {
   @Override
   public void start(Stage stage) {
     Group group = buildScene();
-    group.setAutoSizeChildren(false);
     
     Scene scene = new Scene(group,VIEWPORT_WIDTH, VIEWPORT_HEIGTH,true,SceneAntialiasing.BALANCED);
 
@@ -115,13 +114,13 @@ public class EarthMoonSystem extends Application {
     rotation.setPivotZ(earth.getTranslateZ()-moon.getTranslateZ());
     rotation.setAxis(Rotate.Y_AXIS);
     moon.getTransforms().add(rotation);
-    Timeline timeline = new Timeline(
+    Timeline moonRevolutionTimeline = new Timeline(
             new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
             new KeyFrame(Duration.seconds(10), new KeyValue(rotation.angleProperty(), -360)));
-    timeline.setCycleCount(Timeline.INDEFINITE);
+    moonRevolutionTimeline.setCycleCount(Timeline.INDEFINITE);
 
     ParallelTransition parallel= new ParallelTransition();
-    parallel.getChildren().addAll(timeline,rotateAroundYAxis(earth) );
+    parallel.getChildren().addAll(moonRevolutionTimeline,rotateAroundYAxis(earth) );
     parallel.play();
     
   }
